@@ -50,6 +50,17 @@ class line_func(object):
     def value(self, t):
         f = min(t / self.step, 1.0)
         return self.initial + f * (self.final - self.initial)
+        
+def show_func(env_eval, model, seed, e_turns=3):
+    for t in range(e_turns):
+        s, _ = env_eval.reset(seed=seed)
+        done = False
+        while not done:
+            action = model.action_selection(s, True)
+            s_, r, dw, tr, _ = env_eval.step(action)
+            s = s_
+            done = (dw or tr)
+            env_eval.render()
 
 
 '''Hyperparameter Setting'''
@@ -167,7 +178,9 @@ def main():
                 if total_steps % opt.save_interval == 0:
                     model.save(opt.algo_name, opt.EnvName, total_steps)
 
-    score = eval_func(env_eval, model, True, int(opt.e_turns))
+    if opt.show:
+        env_show = gym.make(Bench, render_mode="human" if opt.show else None)
+        show_func(env_show, model, env_seed + 1, 3)
     env_train.close()
     env_eval.close()
 
