@@ -1,6 +1,7 @@
 # D3QN_PP
-Dueling-DDQN with priopotized experience Relay
-\\tested in Atari
+Dueling-DDQN with priopotized experience Relay 
+
+tested in gym 0.26.2, Atari
 
 
 
