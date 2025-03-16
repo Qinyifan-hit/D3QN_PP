@@ -166,7 +166,7 @@ def main():
                 model.train(replay)
 
                 if total_steps % opt.eval_interval == 0:
-                    score = eval_func(env_eval, model, seed=seed + 1, )
+                    score = eval_func(env_eval, model, opt.seed, )
                     if opt.write:
                         writer.add_scalar('ep_r', score, global_step=total_steps)
                         writer.add_scalar('noise', model.exp_noise, global_step=total_steps)
